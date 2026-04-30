@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/src/q4_fluxo/FluxoMapper.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/q4_fluxo/FluxoMapper.java" />
+              <option name="updatedContent" value="package q4_fluxo;&#10;&#10;import org.apache.hadoop.io.LongWritable;&#10;import org.apache.hadoop.io.Text;&#10;import org.apache.hadoop.mapreduce.Mapper;&#10;&#10;import java.io.IOException;&#10;&#10;// Número de transações por tipo de fluxo (Export, Import, etc.)&#10;&#10;public class FluxoMapper extends Mapper&lt;LongWritable, Text, Text, LongWritable&gt; {&#10;&#10;    private static final LongWritable UM = new LongWritable(1);&#10;    private final Text fluxo = new Text();&#10;&#10;    @Override&#10;    protected void map(LongWritable key, Text value, Context context)&#10;            throws IOException, InterruptedException {&#10;&#10;        String linha = value.toString();&#10;&#10;        // 1. Remove o cabeçalho&#10;        if (linha.startsWith(&quot;country&quot;)) return;&#10;&#10;        // 2. Divide pelo separador &quot;;&quot;&#10;        String[] campos = linha.split(&quot;;&quot;);&#10;&#10;        // 3. Trata dados faltantes (precisa ter pelo menos 5 colunas para acessar flow)&#10;        if (campos.length &lt; 5) return;&#10;&#10;        String flow = campos[4].trim();&#10;&#10;        // 4. Trata fluxo vazio ou inválido&#10;        if (flow.isEmpty()) return;&#10;&#10;        fluxo.set(flow);&#10;        context.write(fluxo, UM);&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/q4_fluxo/FluxoReducer.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/q4_fluxo/FluxoReducer.java" />
+              <option name="updatedContent" value="package q4_fluxo;&#10;&#10;import org.apache.hadoop.io.LongWritable;&#10;import org.apache.hadoop.io.Text;&#10;import org.apache.hadoop.mapreduce.Reducer;&#10;&#10;import java.io.IOException;&#10;&#10;/**&#10; * Q4 - Número de transações por tipo de fluxo&#10; *&#10; * Reducer: soma todos os &quot;1&quot; para cada tipo de fluxo (Export, Import, etc.)&#10; *&#10; * Entrada:  (&quot;Export&quot;, [1, 1, 1, ...])&#10; * Saída:    (&quot;Export&quot;, total)&#10; */&#10;public class FluxoReducer extends Reducer&lt;Text, LongWritable, Text, LongWritable&gt; {&#10;&#10;    @Override&#10;    protected void reduce(Text key, Iterable&lt;LongWritable&gt; values, Context context)&#10;            throws IOException, InterruptedException {&#10;&#10;        long total = 0;&#10;&#10;        for (LongWritable valor : values) {&#10;            total += valor.get();&#10;        }&#10;&#10;        context.write(key, new LongWritable(total));&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -28,3 +28,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+data/operacoes_comerciais_inteira.csv

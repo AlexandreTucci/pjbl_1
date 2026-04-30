@@ -1,4 +1,4 @@
-package q1_brasil;
+package q3_categoria;
 
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -6,7 +6,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class BrasilReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
+public class CategoriaReducer extends Reducer<Text, LongWritable, Text, LongWritable>{
 
     @Override
     protected void reduce(Text key, Iterable<LongWritable> values, Context context)
@@ -14,7 +14,6 @@ public class BrasilReducer extends Reducer<Text, LongWritable, Text, LongWritabl
 
         long total = 0;
 
-        // Soma todos os valores recebidos
         for (LongWritable valor : values) {
             total += valor.get();
         }

@@ -14,7 +14,7 @@ import java.io.IOException;
  * Entrada:  ("2016", [1, 1, 1, ...])
  * Saída:    ("2016", total)
  */
-public class YearReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
+public class AnoReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
 
     @Override
     protected void reduce(Text key, Iterable<LongWritable> values, Context context)

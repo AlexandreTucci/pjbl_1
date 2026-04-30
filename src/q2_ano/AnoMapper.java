@@ -6,15 +6,9 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-/**
- * Q2 - Número de transações por ano
- *
- * Mapper: para cada linha do CSV, emite (ano, 1).
- *
- * Entrada:  cada linha do CSV
- * Saída:    ("2016", 1), ("2015", 1), ...
- */
-public class YearMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
+// Quantidade de transações por Ano
+
+public class AnoMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 
     private static final LongWritable UM = new LongWritable(1);
     private final Text ano = new Text();

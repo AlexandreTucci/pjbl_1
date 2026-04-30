@@ -6,15 +6,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-/**
- * Q1 - Número de transações envolvendo o Brasil
- *
- * Mapper: para cada linha do CSV, verifica se o país (coluna 0) é "Brazil".
- * Se sim, emite (chave="Brazil", valor=1).
- *
- * Entrada:  cada linha do CSV
- * Saída:    ("Brazil", 1)
- */
+// Quantidade de transações envolvendo o Brasil
+
 public class BrasilMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 
     private static final LongWritable UM = new LongWritable(1);

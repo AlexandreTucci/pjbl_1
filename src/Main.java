@@ -18,20 +18,14 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  */
 public class Main {
 
-    // =========================================================
-    // ALTERE AQUI para escolher a questão a ser executada (1-8)
-    // =========================================================
-    private static final int QUESTAO = 2;
+    private static final int QUESTAO = 4;
 
-    // Caminho para o arquivo CSV de entrada
     private static final String INPUT_PATH  = "data/operacoes_comerciais_inteira.csv";
 
-    // Pasta de saída (será criada automaticamente)
     private static final String OUTPUT_PATH = "output/questao" + QUESTAO;
 
     public static void main(String[] args) throws Exception {
 
-        // Usa diretório dentro do próprio projeto — evita problemas de permissão
         String tmpDir = System.getProperty("user.dir") + "/tmp";
         new java.io.File(tmpDir).mkdirs();
 
@@ -49,7 +43,6 @@ public class Main {
         conf.set("mapreduce.jobtracker.staging.root.dir", tmpDir + "/staging");
         conf.set("mapreduce.jobtracker.system.dir", tmpDir + "/mapred/system");
 
-        // Cria subpastas necessárias
         new java.io.File(tmpDir + "/mapred/local").mkdirs();
         new java.io.File(tmpDir + "/mapred/system").mkdirs();
         new java.io.File(tmpDir + "/staging").mkdirs();
@@ -61,31 +54,23 @@ public class Main {
             System.exit(1);
         }
 
-        // Define os caminhos de entrada e saída
         FileInputFormat.addInputPath(job, new Path(INPUT_PATH));
         FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
 
-        System.out.println("======================================");
         System.out.println("  Executando Questão " + QUESTAO);
         System.out.println("  Input:  " + INPUT_PATH);
         System.out.println("  Output: " + OUTPUT_PATH);
-        System.out.println("======================================");
 
         // Executa o job e aguarda conclusão
         boolean sucesso = job.waitForCompletion(true);
         System.exit(sucesso ? 0 : 1);
     }
 
-    /**
-     * Fábrica de jobs — retorna o job correspondente à questão selecionada.
-     * À medida que você implementar as classes, descomente os blocos abaixo.
-     */
+    // Retorna o job correspondente à questão selecionada.
     private static Job criarJob(Configuration conf) throws Exception {
         switch (QUESTAO) {
-
-            // --------------------------------------------------
-            // Q1 - Número de transações envolvendo o Brasil
-            // --------------------------------------------------
+            
+            // Q1 - Quantidade de transações envolvendo o Brasil
             case 1:
                 // TODO: descomente quando implementar Q1
                  Job job1 = Job.getInstance(conf, "Q1 - Transações Brasil");
@@ -95,53 +80,43 @@ public class Main {
                  job1.setOutputKeyClass(Text.class);
                  job1.setOutputValueClass(LongWritable.class);
                  return job1;
-
-            // --------------------------------------------------
-            // Q2 - Número de transações por ano
-            // --------------------------------------------------
+            
+            // Q2 - Quantidade de transações por ano
             case 2:
                 Job job2 = Job.getInstance(conf, "Q2 - Transacoes por Ano");
                 job2.setJarByClass(Main.class);
-                job2.setMapperClass(q2_ano.YearMapper.class);
-                job2.setReducerClass(q2_ano.YearReducer.class);
+                job2.setMapperClass(q2_ano.AnoMapper.class);
+                job2.setReducerClass(q2_ano.AnoReducer.class);
                 job2.setOutputKeyClass(Text.class);
                 job2.setOutputValueClass(LongWritable.class);
                 return job2;
-
-            // --------------------------------------------------
-            // Q3 - Número de transações por categoria
-            // --------------------------------------------------
+            
+            // Q3 - Quantidade de transações por categoria
             case 3:
                 // TODO: descomente quando implementar Q3
-                // Job job3 = Job.getInstance(conf, "Q3 - Transações por Categoria");
-                // job3.setJarByClass(Main.class);
-                // job3.setMapperClass(q3.CategoryMapper.class);
-                // job3.setReducerClass(q3.CategoryReducer.class);
-                // job3.setOutputKeyClass(Text.class);
-                // job3.setOutputValueClass(LongWritable.class);
-                // return job3;
-                System.out.println("[Q3] Mapper/Reducer ainda não implementados.");
-                return null;
+                 Job job3 = Job.getInstance(conf, "Q3 - Transações por Categoria");
+                 job3.setJarByClass(Main.class);
+                 job3.setMapperClass(q3_categoria.CategoriaMapper.class);
+                 job3.setReducerClass(q3_categoria.CategoriaReducer.class);
+                 job3.setOutputKeyClass(Text.class);
+                 job3.setOutputValueClass(LongWritable.class);
+                 return job3;
 
-            // --------------------------------------------------
+            
             // Q4 - Número de transações por tipo de fluxo
-            // --------------------------------------------------
             case 4:
                 // TODO: descomente quando implementar Q4
-                // Job job4 = Job.getInstance(conf, "Q4 - Transações por Flow");
-                // job4.setJarByClass(Main.class);
-                // job4.setMapperClass(q4.FlowMapper.class);
-                // job4.setReducerClass(q4.FlowReducer.class);
-                // job4.setOutputKeyClass(Text.class);
-                // job4.setOutputValueClass(LongWritable.class);
-                // return job4;
-                System.out.println("[Q4] Mapper/Reducer ainda não implementados.");
-                return null;
+                 Job job4 = Job.getInstance(conf, "Q4 - Transações por Flow");
+                 job4.setJarByClass(Main.class);
+                 job4.setMapperClass(q4_fluxo.FluxoMapper.class);
+                 job4.setReducerClass(q4_fluxo.FluxoReducer.class);
+                 job4.setOutputKeyClass(Text.class);
+                 job4.setOutputValueClass(LongWritable.class);
+                 return job4;
 
-            // --------------------------------------------------
+            
             // Q5 - Valor médio das transações por ano no Brasil
             //      (requer Writable customizado)
-            // --------------------------------------------------
             case 5:
                 // TODO: descomente quando implementar Q5
                 // Job job5 = Job.getInstance(conf, "Q5 - Média por Ano no Brasil");
@@ -154,10 +129,10 @@ public class Main {
                 System.out.println("[Q5] Mapper/Reducer ainda não implementados.");
                 return null;
 
-            // --------------------------------------------------
+            
             // Q6 - Transação mais cara e mais barata no Brasil em 2016
             //      (Combiner obrigatório + Writable customizado)
-            // --------------------------------------------------
+            
             case 6:
                 // TODO: descomente quando implementar Q6
                 // Job job6 = Job.getInstance(conf, "Q6 - Min/Max Brasil 2016");
@@ -171,10 +146,10 @@ public class Main {
                 System.out.println("[Q6] Mapper/Combiner/Reducer ainda não implementados.");
                 return null;
 
-            // --------------------------------------------------
+            
             // Q7 - Valor médio por ano, somente Export no Brasil
             //      (Combiner obrigatório)
-            // --------------------------------------------------
+            
             case 7:
                 // TODO: descomente quando implementar Q7
                 // Job job7 = Job.getInstance(conf, "Q7 - Média Export Brasil por Ano");
@@ -188,10 +163,10 @@ public class Main {
                 System.out.println("[Q7] Mapper/Combiner/Reducer ainda não implementados.");
                 return null;
 
-            // --------------------------------------------------
+            
             // Q8 - Maior e menor preço por ano e país
             //      (Comparable Writable + Combiner obrigatórios)
-            // --------------------------------------------------
+            
             case 8:
                 // TODO: descomente quando implementar Q8
                 // Job job8 = Job.getInstance(conf, "Q8 - Min/Max por Ano e País");
