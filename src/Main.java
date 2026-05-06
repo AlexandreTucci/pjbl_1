@@ -6,19 +6,9 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-/**
- * Classe principal do projeto MapReduce - PJBL1 Big Data
- * PUCPR - Prof. Joelton Deonei Gotz
- *
- * Para rodar localmente no Windows, certifique-se de ter:
- * 1. winutils.exe em C:\hadoop\bin\
- * 2. Variável de ambiente HADOOP_HOME = C:\hadoop
- *
- * Altere a variável QUESTAO abaixo para escolher qual job executar (1 a 8).
- */
 public class Main {
 
-    private static final int QUESTAO = 4;
+    private static final int QUESTAO = 8;
 
     private static final String INPUT_PATH  = "data/operacoes_comerciais_inteira.csv";
 
@@ -118,67 +108,55 @@ public class Main {
             // Q5 - Valor médio das transações por ano no Brasil
             //      (requer Writable customizado)
             case 5:
-                // TODO: descomente quando implementar Q5
-                // Job job5 = Job.getInstance(conf, "Q5 - Média por Ano no Brasil");
-                // job5.setJarByClass(Main.class);
-                // job5.setMapperClass(q5.AvgBrasilMapper.class);
-                // job5.setReducerClass(q5.AvgBrasilReducer.class);
-                // job5.setOutputKeyClass(Text.class);
-                // job5.setOutputValueClass(q5.AvgWritable.class);
-                // return job5;
-                System.out.println("[Q5] Mapper/Reducer ainda não implementados.");
-                return null;
+                Job job5 = Job.getInstance(conf, "Q5 - Media por Ano no Brasil");
+                job5.setJarByClass(Main.class);
+                job5.setMapperClass(q5_media_brasil.MediaBrasilMapper.class);
+                job5.setReducerClass(q5_media_brasil.MediaBrasilReducer.class);
+                job5.setOutputKeyClass(Text.class);
+                job5.setOutputValueClass(q5_media_brasil.MediaWritable.class);
+                return job5;
 
             
             // Q6 - Transação mais cara e mais barata no Brasil em 2016
             //      (Combiner obrigatório + Writable customizado)
-            
+
             case 6:
-                // TODO: descomente quando implementar Q6
-                // Job job6 = Job.getInstance(conf, "Q6 - Min/Max Brasil 2016");
-                // job6.setJarByClass(Main.class);
-                // job6.setMapperClass(q6.MinMaxMapper.class);
-                // job6.setCombinerClass(q6.MinMaxCombiner.class);
-                // job6.setReducerClass(q6.MinMaxReducer.class);
-                // job6.setOutputKeyClass(Text.class);
-                // job6.setOutputValueClass(q6.MinMaxWritable.class);
-                // return job6;
-                System.out.println("[Q6] Mapper/Combiner/Reducer ainda não implementados.");
-                return null;
+                Job job6 = Job.getInstance(conf, "Q6 - MinMax Brasil 2016");
+                job6.setJarByClass(Main.class);
+                job6.setMapperClass(q6_minmax_brasil_2016.MinMaxMapper.class);
+                job6.setCombinerClass(q6_minmax_brasil_2016.MinMaxCombiner.class);
+                job6.setReducerClass(q6_minmax_brasil_2016.MinMaxReducer.class);
+                job6.setOutputKeyClass(Text.class);
+                job6.setOutputValueClass(q6_minmax_brasil_2016.MinMaxWritable.class);
+                return job6;
 
             
             // Q7 - Valor médio por ano, somente Export no Brasil
             //      (Combiner obrigatório)
-            
+
             case 7:
-                // TODO: descomente quando implementar Q7
-                // Job job7 = Job.getInstance(conf, "Q7 - Média Export Brasil por Ano");
-                // job7.setJarByClass(Main.class);
-                // job7.setMapperClass(q7.AvgExportMapper.class);
-                // job7.setCombinerClass(q7.AvgExportCombiner.class);
-                // job7.setReducerClass(q7.AvgExportReducer.class);
-                // job7.setOutputKeyClass(Text.class);
-                // job7.setOutputValueClass(q7.AvgWritable.class);
-                // return job7;
-                System.out.println("[Q7] Mapper/Combiner/Reducer ainda não implementados.");
-                return null;
+                Job job7 = Job.getInstance(conf, "Q7 - Media Export Brasil por Ano");
+                job7.setJarByClass(Main.class);
+                job7.setMapperClass(q7_media_export_brasil.MediaExportMapper.class);
+                job7.setCombinerClass(q7_media_export_brasil.MediaExportCombiner.class);
+                job7.setReducerClass(q7_media_export_brasil.MediaExportReducer.class);
+                job7.setOutputKeyClass(Text.class);
+                job7.setOutputValueClass(q7_media_export_brasil.MediaWritable.class);
+                return job7;
 
             
             // Q8 - Maior e menor preço por ano e país
             //      (Comparable Writable + Combiner obrigatórios)
-            
+
             case 8:
-                // TODO: descomente quando implementar Q8
-                // Job job8 = Job.getInstance(conf, "Q8 - Min/Max por Ano e País");
-                // job8.setJarByClass(Main.class);
-                // job8.setMapperClass(q8.MinMaxCountryMapper.class);
-                // job8.setCombinerClass(q8.MinMaxCountryCombiner.class);
-                // job8.setReducerClass(q8.MinMaxCountryReducer.class);
-                // job8.setOutputKeyClass(q8.YearCountryWritable.class);
-                // job8.setOutputValueClass(q8.MinMaxWritable.class);
-                // return job8;
-                System.out.println("[Q8] Mapper/Combiner/Reducer ainda não implementados.");
-                return null;
+                Job job8 = Job.getInstance(conf, "Q8 - MinMax por Ano e Pais");
+                job8.setJarByClass(Main.class);
+                job8.setMapperClass(q8_minmax_ano_pais.MinMaxPaisMapper.class);
+                job8.setCombinerClass(q8_minmax_ano_pais.MinMaxPaisCombiner.class);
+                job8.setReducerClass(q8_minmax_ano_pais.MinMaxPaisReducer.class);
+                job8.setOutputKeyClass(q8_minmax_ano_pais.AnoPaisWritable.class);
+                job8.setOutputValueClass(q8_minmax_ano_pais.MinMaxPaisWritable.class);
+                return job8;
 
             default:
                 return null;
