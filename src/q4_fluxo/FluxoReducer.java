@@ -6,14 +6,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-/**
- * Q4 - Número de transações por tipo de fluxo
- *
- * Reducer: soma todos os "1" para cada tipo de fluxo (Export, Import, etc.)
- *
- * Entrada:  ("Export", [1, 1, 1, ...])
- * Saída:    ("Export", total)
- */
 public class FluxoReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
 
     @Override

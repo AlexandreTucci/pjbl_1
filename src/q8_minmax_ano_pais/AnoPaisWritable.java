@@ -6,22 +6,11 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-/**
- * Q8 - Comparable Writable usado como CHAVE do MapReduce
- *
- * Armazena:
- * - ano: ano da transação
- * - pais: país da transação
- *
- * Implementa WritableComparable para poder ser usado como chave,
- * permitindo que o Hadoop ordene e agrupe por (ano, país).
- */
 public class AnoPaisWritable implements WritableComparable<AnoPaisWritable> {
 
     private String ano;
     private String pais;
 
-    // Construtor padrão obrigatório para deserialização
     public AnoPaisWritable() {
         this.ano = "";
         this.pais = "";
@@ -44,10 +33,6 @@ public class AnoPaisWritable implements WritableComparable<AnoPaisWritable> {
         this.pais = in.readUTF();
     }
 
-    /**
-     * Comparação usada pelo Hadoop para ordenar e agrupar chaves.
-     * Ordena primeiro por ano, depois por país.
-     */
     @Override
     public int compareTo(AnoPaisWritable other) {
         int cmpAno = this.ano.compareTo(other.ano);

@@ -6,15 +6,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-/**
- * Q6 - Writable customizado para armazenar min e max
- *
- * Armazena:
- * - minPreco: menor preço encontrado
- * - maxPreco: maior preço encontrado
- * - minCommodity: descrição da transação mais barata
- * - maxCommodity: descrição da transação mais cara
- */
 public class MinMaxWritable implements Writable {
 
     private double minPreco;
@@ -22,7 +13,6 @@ public class MinMaxWritable implements Writable {
     private String minCommodity;
     private String maxCommodity;
 
-    // Construtor padrão obrigatório para deserialização
     public MinMaxWritable() {
         this.minPreco = Double.MAX_VALUE;
         this.maxPreco = Double.MIN_VALUE;

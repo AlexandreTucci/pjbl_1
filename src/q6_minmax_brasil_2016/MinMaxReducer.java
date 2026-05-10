@@ -5,14 +5,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-/**
- * Q6 - Transação mais cara e mais barata no Brasil em 2016
- *
- * Reducer: recebe os min/max parciais do Combiner e encontra o global.
- *
- * Entrada:  ("Brasil2016", [MinMaxWritable parcial, MinMaxWritable parcial, ...])
- * Saída:    ("Brasil2016", MinMaxWritable com min e max globais)
- */
 public class MinMaxReducer extends Reducer<Text, MinMaxWritable, Text, MinMaxWritable> {
 
     @Override

@@ -51,18 +51,14 @@ public class Main {
         System.out.println("  Input:  " + INPUT_PATH);
         System.out.println("  Output: " + OUTPUT_PATH);
 
-        // Executa o job e aguarda conclusão
         boolean sucesso = job.waitForCompletion(true);
         System.exit(sucesso ? 0 : 1);
     }
 
-    // Retorna o job correspondente à questão selecionada.
     private static Job criarJob(Configuration conf) throws Exception {
         switch (QUESTAO) {
             
-            // Q1 - Quantidade de transações envolvendo o Brasil
             case 1:
-                // TODO: descomente quando implementar Q1
                  Job job1 = Job.getInstance(conf, "Q1 - Transações Brasil");
                  job1.setJarByClass(Main.class);
                  job1.setMapperClass(q1_brasil.BrasilMapper.class);
@@ -71,7 +67,6 @@ public class Main {
                  job1.setOutputValueClass(LongWritable.class);
                  return job1;
             
-            // Q2 - Quantidade de transações por ano
             case 2:
                 Job job2 = Job.getInstance(conf, "Q2 - Transacoes por Ano");
                 job2.setJarByClass(Main.class);
@@ -81,9 +76,7 @@ public class Main {
                 job2.setOutputValueClass(LongWritable.class);
                 return job2;
             
-            // Q3 - Quantidade de transações por categoria
             case 3:
-                // TODO: descomente quando implementar Q3
                  Job job3 = Job.getInstance(conf, "Q3 - Transações por Categoria");
                  job3.setJarByClass(Main.class);
                  job3.setMapperClass(q3_categoria.CategoriaMapper.class);
@@ -92,10 +85,7 @@ public class Main {
                  job3.setOutputValueClass(LongWritable.class);
                  return job3;
 
-            
-            // Q4 - Número de transações por tipo de fluxo
             case 4:
-                // TODO: descomente quando implementar Q4
                  Job job4 = Job.getInstance(conf, "Q4 - Transações por Flow");
                  job4.setJarByClass(Main.class);
                  job4.setMapperClass(q4_fluxo.FluxoMapper.class);
@@ -104,9 +94,6 @@ public class Main {
                  job4.setOutputValueClass(LongWritable.class);
                  return job4;
 
-            
-            // Q5 - Valor médio das transações por ano no Brasil
-            //      (requer Writable customizado)
             case 5:
                 Job job5 = Job.getInstance(conf, "Q5 - Media por Ano no Brasil");
                 job5.setJarByClass(Main.class);
@@ -115,10 +102,6 @@ public class Main {
                 job5.setOutputKeyClass(Text.class);
                 job5.setOutputValueClass(q5_media_brasil.MediaWritable.class);
                 return job5;
-
-            
-            // Q6 - Transação mais cara e mais barata no Brasil em 2016
-            //      (Combiner obrigatório + Writable customizado)
 
             case 6:
                 Job job6 = Job.getInstance(conf, "Q6 - MinMax Brasil 2016");
@@ -130,10 +113,6 @@ public class Main {
                 job6.setOutputValueClass(q6_minmax_brasil_2016.MinMaxWritable.class);
                 return job6;
 
-            
-            // Q7 - Valor médio por ano, somente Export no Brasil
-            //      (Combiner obrigatório)
-
             case 7:
                 Job job7 = Job.getInstance(conf, "Q7 - Media Export Brasil por Ano");
                 job7.setJarByClass(Main.class);
@@ -143,10 +122,6 @@ public class Main {
                 job7.setOutputKeyClass(Text.class);
                 job7.setOutputValueClass(q7_media_export_brasil.MediaWritable.class);
                 return job7;
-
-            
-            // Q8 - Maior e menor preço por ano e país
-            //      (Comparable Writable + Combiner obrigatórios)
 
             case 8:
                 Job job8 = Job.getInstance(conf, "Q8 - MinMax por Ano e Pais");

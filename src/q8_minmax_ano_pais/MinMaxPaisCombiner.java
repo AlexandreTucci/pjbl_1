@@ -4,15 +4,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-/**
- * Q8 - Combiner para min/max por ano e país
- *
- * Roda localmente antes do Reducer, reduzindo dados na rede.
- * Mesma lógica do Reducer: encontra min e max parciais.
- *
- * Entrada:  (YearCountryWritable, [MinMaxPaisWritable, ...])
- * Saída:    (YearCountryWritable, MinMaxPaisWritable) — parcial
- */
 public class MinMaxPaisCombiner extends Reducer<AnoPaisWritable, MinMaxPaisWritable, AnoPaisWritable, MinMaxPaisWritable> {
 
     @Override

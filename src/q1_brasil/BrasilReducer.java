@@ -14,7 +14,6 @@ public class BrasilReducer extends Reducer<Text, LongWritable, Text, LongWritabl
 
         long total = 0;
 
-        // Soma todos os valores recebidos
         for (LongWritable valor : values) {
             total += valor.get();
         }

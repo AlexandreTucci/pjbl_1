@@ -6,8 +6,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-// Quantidade de transações por Ano
-
 public class AnoMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 
     private static final LongWritable UM = new LongWritable(1);
@@ -19,18 +17,13 @@ public class AnoMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
 
         String linha = value.toString();
 
-        // 1. Remove o cabeçalho
         if (linha.startsWith("Country")) return;
 
-        // 2. Divide pelo separador ";"
         String[] campos = linha.split(";");
 
-        // 3. Trata dados faltantes
         if (campos.length < 10) return;
 
         String year = campos[1].trim();
-
-        // 4. Trata ano vazio ou inválido
         if (year.isEmpty()) return;
 
         ano.set(year);

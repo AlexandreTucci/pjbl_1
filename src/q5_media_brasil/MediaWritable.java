@@ -6,21 +6,11 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-/**
- * Q5 - Writable customizado para calcular média
- *
- * Armazena:
- * - soma: soma total dos preços
- * - contagem: número de transações
- *
- * A média é calculada no Reducer: soma / contagem
- */
 public class MediaWritable implements Writable {
 
     private double soma;
     private long contagem;
 
-    // Construtor padrão obrigatório para deserialização
     public MediaWritable() {
         this.soma = 0.0;
         this.contagem = 0;
@@ -31,14 +21,12 @@ public class MediaWritable implements Writable {
         this.contagem = contagem;
     }
 
-    // Serialização — escrita no disco/rede
     @Override
     public void write(DataOutput out) throws IOException {
         out.writeDouble(soma);
         out.writeLong(contagem);
     }
 
-    // Desserialização — leitura do disco/rede
     @Override
     public void readFields(DataInput in) throws IOException {
         this.soma = in.readDouble();

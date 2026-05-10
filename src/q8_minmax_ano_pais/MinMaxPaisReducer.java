@@ -4,15 +4,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-/**
- * Q8 - Transação com maior e menor preço (amount) por ano e país
- *
- * Reducer: recebe os min/max parciais do Combiner e encontra o global
- * para cada combinação (ano, país).
- *
- * Entrada:  (AnoPaisWritable("2016","Brazil"), [MinMaxPaisWritable parcial, ...])
- * Saída:    (AnoPaisWritable("2016","Brazil"), MinMaxPaisWritable global)
- */
 public class MinMaxPaisReducer extends Reducer<AnoPaisWritable, MinMaxPaisWritable, AnoPaisWritable, MinMaxPaisWritable> {
 
     @Override
