@@ -22,7 +22,7 @@ public class FluxoMapper extends Mapper<LongWritable, Text, Text, LongWritable> 
 
         String[] campos = linha.split(";");
 
-        if (campos.length < 5) return;
+        if (campos.length < 10) return;
 
         String flow = campos[4].trim();
 
