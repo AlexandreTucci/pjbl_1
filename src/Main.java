@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class Main {
 
-    private static final int QUESTAO = 8;
+    private static final int QUESTAO = 1;
 
     private static final String INPUT_PATH  = "data/operacoes_comerciais_inteira.csv";
 
@@ -46,6 +46,9 @@ public class Main {
 
         FileInputFormat.addInputPath(job, new Path(INPUT_PATH));
         FileOutputFormat.setOutputPath(job, new Path(OUTPUT_PATH));
+
+        Path outputPath = new Path(OUTPUT_PATH);
+        outputPath.getFileSystem(conf).delete(outputPath, true);
 
         System.out.println("  Executando Questão " + QUESTAO);
         System.out.println("  Input:  " + INPUT_PATH);
